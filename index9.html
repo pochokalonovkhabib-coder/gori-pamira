@@ -1,0 +1,1112 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Памир — Душа Гор</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Sans+Pro:wght@300;400;600&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --terracotta: #c75b39;
+            --sand: #d4a574;
+            --stone: #8b7355;
+            --deep-earth: #2c1810;
+            --cream: #faf6f1;
+            --moss: #6b8e23;
+            --sky-warm: #e8d5b7;
+        }
+        
+        body {
+            font-family: 'Source Sans Pro', sans-serif;
+            background: var(--cream);
+            color: var(--deep-earth);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+        
+        /* Органические формы фона */
+        .organic-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+            opacity: 0.4;
+        }
+        
+        .blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            animation: float 20s ease-in-out infinite;
+        }
+        
+        .blob-1 {
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(199, 91, 57, 0.2), transparent);
+            top: -10%;
+            left: -10%;
+            animation-delay: 0s;
+        }
+        
+        .blob-2 {
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(212, 165, 116, 0.3), transparent);
+            bottom: 10%;
+            right: -5%;
+            animation-delay: -5s;
+        }
+        
+        .blob-3 {
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(107, 142, 35, 0.15), transparent);
+            top: 40%;
+            left: 60%;
+            animation-delay: -10s;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(30px, -50px) scale(1.1); }
+            66% { transform: translate(-20px, 20px) scale(0.9); }
+        }
+        
+        /* Навигация — минималистичная */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 2rem 4rem;
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.4s ease;
+        }
+        
+        nav.scrolled {
+            background: rgba(250, 246, 241, 0.9);
+            backdrop-filter: blur(20px);
+            padding: 1rem 4rem;
+            box-shadow: 0 2px 20px rgba(44, 24, 16, 0.1);
+        }
+        
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            color: var(--terracotta);
+            font-weight: 700;
+            letter-spacing: -1px;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 3rem;
+            list-style: none;
+        }
+        
+        .nav-links a {
+            color: var(--deep-earth);
+            text-decoration: none;
+            font-weight: 400;
+            font-size: 0.95rem;
+            position: relative;
+            transition: color 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 0.8rem;
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: var(--terracotta);
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+        
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        
+        .nav-links a:hover {
+            color: var(--terracotta);
+        }
+        
+        /* Герой — асимметричный, текстовый */
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            align-items: center;
+            padding: 0 6rem;
+            z-index: 2;
+            gap: 4rem;
+        }
+        
+        .hero-content {
+            padding: 2rem 0;
+        }
+        
+        .hero-label {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            color: var(--terracotta);
+            margin-bottom: 1.5rem;
+            display: block;
+        }
+        
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(3rem, 5vw, 5rem);
+            line-height: 1.1;
+            margin-bottom: 2rem;
+            color: var(--deep-earth);
+            font-weight: 400;
+        }
+        
+        .hero h1 em {
+            font-style: italic;
+            color: var(--terracotta);
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 500px;
+            margin-bottom: 3rem;
+            color: var(--stone);
+            line-height: 1.8;
+            font-weight: 300;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            padding: 1rem 3rem;
+            background: var(--terracotta);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: 2px solid var(--terracotta);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 0.85rem;
+        }
+        
+        .cta-button:hover {
+            background: transparent;
+            color: var(--terracotta);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(199, 91, 57, 0.3);
+        }
+        
+        .hero-visual {
+            position: relative;
+            height: 80vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .hero-image-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 30px 60px rgba(44, 24, 16, 0.2);
+        }
+        
+        .hero-image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.8s ease;
+        }
+        
+        .hero-visual:hover .hero-image-container img {
+            transform: scale(1.05);
+        }
+        
+        .floating-card {
+            position: absolute;
+            background: white;
+            padding: 1.5rem 2rem;
+            border-radius: 16px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            z-index: 10;
+        }
+        
+        .card-1 {
+            bottom: 10%;
+            left: -10%;
+            animation: float-card 6s ease-in-out infinite;
+        }
+        
+        .card-2 {
+            top: 10%;
+            right: -5%;
+            animation: float-card 6s ease-in-out infinite;
+            animation-delay: -3s;
+        }
+        
+        @keyframes float-card {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+        
+        .stat-number {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            color: var(--terracotta);
+            display: block;
+        }
+        
+        .stat-label {
+            font-size: 0.85rem;
+            color: var(--stone);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        /* Горизонтальная прокрутка галереи */
+        .gallery-section {
+            position: relative;
+            z-index: 2;
+            padding: 8rem 0;
+            overflow: hidden;
+        }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+            padding: 0 2rem;
+        }
+        
+        .section-header h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 4vw, 3.5rem);
+            color: var(--deep-earth);
+            margin-bottom: 1rem;
+        }
+        
+        .section-header p {
+            color: var(--stone);
+            max-width: 600px;
+            margin: 0 auto;
+            font-size: 1.1rem;
+        }
+        
+        .horizontal-scroll {
+            display: flex;
+            gap: 2rem;
+            padding: 2rem 4rem;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            scrollbar-width: none;
+        }
+        
+        .horizontal-scroll::-webkit-scrollbar {
+            display: none;
+        }
+        
+        .gallery-card {
+            flex: 0 0 400px;
+            height: 500px;
+            position: relative;
+            border-radius: 24px;
+            overflow: hidden;
+            scroll-snap-align: start;
+            cursor: pointer;
+            transition: transform 0.4s ease;
+        }
+        
+        .gallery-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .gallery-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+        
+        .gallery-card:hover img {
+            transform: scale(1.1);
+        }
+        
+        .gallery-card-content {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 2rem;
+            background: linear-gradient(to top, rgba(44, 24, 16, 0.9), transparent);
+            color: white;
+            transform: translateY(60%);
+            transition: transform 0.4s ease;
+        }
+        
+        .gallery-card:hover .gallery-card-content {
+            transform: translateY(0);
+        }
+        
+        .gallery-card-content h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .gallery-card-content p {
+            font-size: 0.95rem;
+            opacity: 0.9;
+            line-height: 1.5;
+        }
+        
+        /* Аккордеон-факты */
+        .facts-section {
+            position: relative;
+            z-index: 2;
+            padding: 6rem 4rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .accordion {
+            display: flex;
+            gap: 1rem;
+            height: 500px;
+        }
+        
+        .accordion-item {
+            flex: 1;
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: flex 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+        }
+        
+        .accordion-item:hover,
+        .accordion-item.active {
+            flex: 3;
+        }
+        
+        .accordion-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.3;
+            transition: opacity 0.4s;
+        }
+        
+        .accordion-item:hover .accordion-image,
+        .accordion-item.active .accordion-image {
+            opacity: 0.6;
+        }
+        
+        .accordion-content {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 2rem;
+            background: linear-gradient(to top, rgba(255,255,255,0.95), transparent);
+        }
+        
+        .accordion-number {
+            font-family: 'Playfair Display', serif;
+            font-size: 4rem;
+            color: var(--terracotta);
+            line-height: 1;
+            margin-bottom: 0.5rem;
+        }
+        
+        .accordion-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--deep-earth);
+            margin-bottom: 0.5rem;
+            white-space: nowrap;
+        }
+        
+        .accordion-desc {
+            font-size: 0.95rem;
+            color: var(--stone);
+            opacity: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.4s ease;
+        }
+        
+        .accordion-item:hover .accordion-desc,
+        .accordion-item.active .accordion-desc {
+            opacity: 1;
+            max-height: 100px;
+            margin-top: 1rem;
+        }
+        
+        /* Таймлайн */
+        .timeline-section {
+            position: relative;
+            z-index: 2;
+            padding: 6rem 4rem;
+            background: var(--deep-earth);
+            color: var(--cream);
+        }
+        
+        .timeline-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+        
+        .timeline-header h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 4vw, 3rem);
+            margin-bottom: 1rem;
+        }
+        
+        .timeline {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+        }
+        
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--terracotta);
+            transform: translateX(-50%);
+        }
+        
+        .timeline-item {
+            display: flex;
+            justify-content: flex-end;
+            padding-right: 50%;
+            position: relative;
+            margin-bottom: 3rem;
+        }
+        
+        .timeline-item:nth-child(even) {
+            justify-content: flex-start;
+            padding-right: 0;
+            padding-left: 50%;
+        }
+        
+        .timeline-content {
+            background: rgba(255,255,255,0.05);
+            padding: 2rem;
+            border-radius: 16px;
+            max-width: 350px;
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .timeline-content:hover {
+            background: rgba(255,255,255,0.1);
+            transform: translateX(10px);
+        }
+        
+        .timeline-item:nth-child(even) .timeline-content:hover {
+            transform: translateX(-10px);
+        }
+        
+        .timeline-dot {
+            position: absolute;
+            left: 50%;
+            top: 2rem;
+            width: 16px;
+            height: 16px;
+            background: var(--terracotta);
+            border-radius: 50%;
+            transform: translateX(-50%);
+            border: 4px solid var(--deep-earth);
+        }
+        
+        .timeline-year {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            color: var(--terracotta);
+            margin-bottom: 0.5rem;
+        }
+        
+        /* Интерактивная карта (стилизованная) */
+        .map-section {
+            position: relative;
+            z-index: 2;
+            padding: 6rem 4rem;
+            text-align: center;
+        }
+        
+        .map-container {
+            max-width: 900px;
+            margin: 3rem auto;
+            position: relative;
+            background: white;
+            border-radius: 24px;
+            padding: 3rem;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+        }
+        
+        .map-svg {
+            width: 100%;
+            height: auto;
+        }
+        
+        .map-point {
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .map-point:hover circle {
+            r: 12;
+            fill: var(--terracotta);
+        }
+        
+        .map-tooltip {
+            position: absolute;
+            background: var(--deep-earth);
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 12px;
+            font-size: 0.9rem;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s;
+            z-index: 100;
+        }
+        
+        /* Подвал */
+        footer {
+            position: relative;
+            z-index: 2;
+            padding: 4rem;
+            text-align: center;
+            background: var(--deep-earth);
+            color: var(--cream);
+        }
+        
+        footer .logo {
+            margin-bottom: 1rem;
+            display: inline-block;
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .social-links a {
+            width: 50px;
+            height: 50px;
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        
+        .social-links a:hover {
+            background: var(--terracotta);
+            border-color: var(--terracotta);
+            transform: translateY(-5px);
+        }
+        
+        /* Курсор */
+        .custom-cursor {
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--terracotta);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            transition: transform 0.1s;
+            mix-blend-mode: difference;
+        }
+        
+        .cursor-dot {
+            width: 6px;
+            height: 6px;
+            background: var(--terracotta);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+        }
+        
+        /* Адаптивность */
+        @media (max-width: 968px) {
+            .hero {
+                grid-template-columns: 1fr;
+                padding: 6rem 2rem 2rem;
+            }
+            
+            .hero-visual {
+                height: 50vh;
+                order: -1;
+            }
+            
+            .accordion {
+                flex-direction: column;
+                height: auto;
+            }
+            
+            .accordion-item {
+                height: 200px;
+            }
+            
+            .timeline::before {
+                left: 20px;
+            }
+            
+            .timeline-item,
+            .timeline-item:nth-child(even) {
+                justify-content: flex-start;
+                padding-left: 50px;
+                padding-right: 0;
+            }
+            
+            .timeline-dot {
+                left: 20px;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+        }
+        
+        /* Плавное появление */
+        .reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s ease;
+        }
+        
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <!-- Органические формы фона -->
+    <div class="organic-bg">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+    </div>
+    
+    <!-- Кастомный курсор -->
+    <div class="custom-cursor" id="cursor"></div>
+    <div class="cursor-dot" id="cursor-dot"></div>
+    
+    <!-- Навигация -->
+    <nav id="navbar">
+        <div class="logo">Памир</div>
+        <ul class="nav-links">
+            <li><a href="#home">Главная</a></li>
+            <li><a href="#gallery">Галерея</a></li>
+            <li><a href="#facts">Факты</a></li>
+            <li><a href="#history">История</a></li>
+            <li><a href="#map">Карта</a></li>
+        </ul>
+    </nav>
+    
+    <!-- Герой -->
+    <section class="hero" id="home">
+        <div class="hero-content reveal">
+            <span class="hero-label">Таджикистан</span>
+            <h1>Где земля<br>касается <em>неба</em></h1>
+            <p>Откройте для себя величественные ледники Памира — древние хранители воды, питающие жизнь across Центральной Азии на протяжении тысячелетий.</p>
+            <a href="#gallery" class="cta-button">Исследовать</a>
+        </div>
+        <div class="hero-visual reveal">
+            <div class="hero-image-container">
+                <img src="https://kimi-web-img.moonshot.cn/img/cdn.britannica.com/9d3daa23e75bf2c0754118304e23a311b9e15e0e.jpg" alt="Памир">
+            </div>
+            <div class="floating-card card-1">
+                <span class="stat-number">8000+</span>
+                <span class="stat-label">Ледников</span>
+            </div>
+            <div class="floating-card card-2">
+                <span class="stat-number">77</span>
+                <span class="stat-label">Км длина</span>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Горизонтальная галерея -->
+    <section class="gallery-section" id="gallery">
+        <div class="section-header reveal">
+            <h2>Галерея ледников</h2>
+            <p>Более 8000 ледников покрывают горные вершины Таджикистана, занимая площадь около 8476 км²</p>
+        </div>
+        <div class="horizontal-scroll">
+            <div class="gallery-card">
+                <img src="https://kimi-web-img.moonshot.cn/img/trekking.ru/e0715e3ee73bac29ef9c72b983fde7442655cf66.jpg" alt="Пик Гармо">
+                <div class="gallery-card-content">
+                    <h3>Пик Гармо</h3>
+                    <p>Величественный шеститысячник, покрытый вечными ледниками. Высота 6595 м над уровнем моря.</p>
+                </div>
+            </div>
+            
+            <div class="gallery-card">
+                <img src="https://kimi-web-img.moonshot.cn/img/www.advantour.com/696c125c83561ec9a20926cbe7120e8343af4e72.jpg" alt="Памирское плоскогорье">
+                <div class="gallery-card-content">
+                    <h3>Памирское плоскогорье</h3>
+                    <p>Обширные ледниковые поля и горные цепи, простирающиеся на сотни километров.</p>
+                </div>
+            </div>
+            
+            <div class="gallery-card">
+                <img src="https://kimi-web-img.moonshot.cn/img/artemjew.ru/7d8f3145e3a2dcb39341dc26d59883a1df18491a.jpg" alt="Вид из космоса">
+                <div class="gallery-card-content">
+                    <h3>Вид из космоса</h3>
+                    <p>Уникальный снимок ледников Памира, сделанный космонавтом Олегом Артемьевым с борта МКС.</p>
+                </div>
+            </div>
+            
+            <div class="gallery-card">
+                <img src="https://kimi-web-img.moonshot.cn/img/idsb.tmgrup.com.tr/cf800b8568bf76c4c2a0c33a014231692fb2c2c7.jpg" alt="Ледниковая поверхность">
+                <div class="gallery-card-content">
+                    <h3>Ледниковая поверхность</h3>
+                    <p>Уникальная текстура ледника с характерными трещинами и неве — ледяными шипами.</p>
+                </div>
+            </div>
+            
+            <div class="gallery-card">
+                <img src="https://kimi-web-img.moonshot.cn/img/trekking.ru/24df146a3bc6bb8515a064a9e20b4346bd15457e.jpg" alt="Вершина Гармо">
+                <div class="gallery-card-content">
+                    <h3>Вершина Гармо</h3>
+                    <p>Ближний план величественной вершины, покрытой снегом и льдом круглый год.</p>
+                </div>
+            </div>
+            
+            <div class="gallery-card">
+                <img src="https://kimi-web-img.moonshot.cn/img/www.orexca.com/e53b42bb28aa662ff099a9bf68ccd12ec9779a23.jpg" alt="Ледник Федченко">
+                <div class="gallery-card-content">
+                    <h3>Ледник Федченко</h3>
+                    <p>Самый длинный ледник за пределами полярных регионов — длина 77 км, площадь 992 км².</p>
+                </div>
+            </div>
+            
+            <div class="gallery-card">
+                <img src="https://kimi-web-img.moonshot.cn/img/poisknews.ru/9c0e13da4501fcbb8d6496decd3d8e79bc833030.jpg" alt="Ледниковые долины">
+                <div class="gallery-card-content">
+                    <h3>Ледниковые долины</h3>
+                    <p>Глубокие долины, выработанные движением ледников на протяжении тысячелетий.</p>
+                </div>
+            </div>
+            
+            <div class="gallery-card">
+                <img src="https://kimi-web-img.moonshot.cn/img/explorers.uz/a5252410dd00ed9a1efd5c8ce260e1824eebad56.jpg" alt="Панорама Федченко">
+                <div class="gallery-card-content">
+                    <h3>Панорама Федченко</h3>
+                    <p>Гигантский ледник питает множество рек и является важнейшим источником пресной воды.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Аккордеон-факты -->
+    <section class="facts-section" id="facts">
+        <div class="section-header reveal">
+            <h2>Цифры в деталях</h2>
+            <p>Каждый ледник — это целый мир со своей историей и масштабом</p>
+        </div>
+        <div class="accordion reveal">
+            <div class="accordion-item active">
+                <img src="https://kimi-web-img.moonshot.cn/img/cdn.britannica.com/9d3daa23e75bf2c0754118304e23a311b9e15e0e.jpg" alt="" class="accordion-image">
+                <div class="accordion-content">
+                    <div class="accordion-number">8000</div>
+                    <div class="accordion-title">Ледников</div>
+                    <div class="accordion-desc">Более 8000 ледников зарегистрировано на территории Таджикистана, от маленьких ледниковых ниш до гигантских долинных ледников.</div>
+                </div>
+            </div>
+            
+            <div class="accordion-item">
+                <img src="https://kimi-web-img.moonshot.cn/img/www.orexca.com/e53b42bb28aa662ff099a9bf68ccd12ec9779a23.jpg" alt="" class="accordion-image">
+                <div class="accordion-content">
+                    <div class="accordion-number">77</div>
+                    <div class="accordion-title">Километров</div>
+                    <div class="accordion-desc">Длина ледника Федченко — самого длинного вне полярных широт. Это почти как расстояние от Москвы до Тулы.</div>
+                </div>
+            </div>
+            
+            <div class="accordion-item">
+                <img src="https://kimi-web-img.moonshot.cn/img/www.advantour.com/696c125c83561ec9a20926cbe7120e8343af4e72.jpg" alt="" class="accordion-image">
+                <div class="accordion-content">
+                    <div class="accordion-number">8496</div>
+                    <div class="accordion-title">Км² площади</div>
+                    <div class="accordion-desc">Общая площадь ледникового покрова страны — это больше, чем площадь многих европейских государств.</div>
+                </div>
+            </div>
+            
+            <div class="accordion-item">
+                <img src="https://kimi-web-img.moonshot.cn/img/trekking.ru/e0715e3ee73bac29ef9c72b983fde7442655cf66.jpg" alt="" class="accordion-image">
+                <div class="accordion-content">
+                    <div class="accordion-number">60</div>
+                    <div class="accordion-title">Млрд м³</div>
+                    <div class="accordion-desc">Объём ледниковых запасов пресной воды — ключевой ресурс для всего региона Средней Азии.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Таймлайн истории -->
+    <section class="timeline-section" id="history">
+        <div class="timeline-header reveal">
+            <h2>История исследований</h2>
+            <p>Как человечество постигало величие Памира</p>
+        </div>
+        <div class="timeline reveal">
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <div class="timeline-year">1871</div>
+                    <p>Первое научное описание ледника Федченко экспедицией А.П. Федченко. Начало системного изучения памирских ледников.</p>
+                </div>
+                <div class="timeline-dot"></div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <div class="timeline-year">1928</div>
+                    <p>Советская экспедиция под руководством Н.Л. Корженевского составляет первую подробную карту центрального Памира.</p>
+                </div>
+                <div class="timeline-dot"></div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <div class="timeline-year">1956</div>
+                    <p>Первое восхождение на пик Коммунизма (7495 м) — высочайшую точку Таджикистана и бывшего СССР.</p>
+                </div>
+                <div class="timeline-dot"></div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <div class="timeline-year">2024</div>
+                    <p>Современные спутниковые технологии позволяют отслеживать изменения ледников с точностью до сантиметров.</p>
+                </div>
+                <div class="timeline-dot"></div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Интерактивная карта -->
+    <section class="map-section" id="map">
+        <div class="section-header reveal">
+            <h2>На карте мира</h2>
+            <p>Памир — сердце высокой Азии, где пересекаются горные системы Тянь-Шаня, Гималаев и Каракорума</p>
+        </div>
+        <div class="map-container reveal">
+            <svg class="map-svg" viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg">
+                <!-- Стилизованная карта -->
+                <rect width="800" height="400" fill="#faf6f1" rx="20"/>
+                
+                <!-- Горы (стилизованные) -->
+                <path d="M 100 300 L 200 150 L 300 280 L 400 120 L 500 260 L 600 140 L 700 300" 
+                      fill="none" stroke="#d4a574" stroke-width="3" stroke-linecap="round"/>
+                <path d="M 150 320 L 250 180 L 350 300 L 450 160 L 550 290 L 650 170 L 750 320" 
+                      fill="none" stroke="#c75b39" stroke-width="2" stroke-linecap="round" opacity="0.5"/>
+                
+                <!-- Точки ледников -->
+                <g class="map-point" data-name="Ледник Федченко" data-info="77 км, самый длинный вне полярных широт">
+                    <circle cx="400" cy="200" r="8" fill="#c75b39" opacity="0.8"/>
+                    <circle cx="400" cy="200" r="20" fill="none" stroke="#c75b39" stroke-width="1" opacity="0.3">
+                        <animate attributeName="r" values="20;25;20" dur="3s" repeatCount="indefinite"/>
+                        <animate attributeName="opacity" values="0.3;0.1;0.3" dur="3s" repeatCount="indefinite"/>
+                    </circle>
+                </g>
+                
+                <g class="map-point" data-name="Пик Исмаила Самани" data-info="Высочайшая точка — 7495 м">
+                    <circle cx="350" cy="180" r="6" fill="#8b7355" opacity="0.8"/>
+                </g>
+                
+                <g class="map-point" data-name="Ледник Горбунова" data-info="Один из крупнейших ледников Памира">
+                    <circle cx="450" cy="220" r="6" fill="#8b7355" opacity="0.8"/>
+                </g>
+                
+                <g class="map-point" data-name="Пик Ленина" data-info="Высота 7134 м, популярный среди альпинистов">
+                    <circle cx="300" cy="250" r="6" fill="#8b7355" opacity="0.8"/>
+                </g>
+                
+                <!-- Подписи -->
+                <text x="400" y="240" text-anchor="middle" font-family="Source Sans Pro" font-size="12" fill="#2c1810" font-weight="600">Федченко</text>
+                <text x="350" y="160" text-anchor="middle" font-family="Source Sans Pro" font-size="11" fill="#8b7355">И. Самани</text>
+                <text x="450" y="250" text-anchor="middle" font-family="Source Sans Pro" font-size="11" fill="#8b7355">Горбунова</text>
+                <text x="300" y="280" text-anchor="middle" font-family="Source Sans Pro" font-size="11" fill="#8b7355">Ленина</text>
+            </svg>
+            <div class="map-tooltip" id="map-tooltip"></div>
+        </div>
+    </section>
+    
+    <!-- Подвал -->
+    <footer>
+        <div class="logo">Памир</div>
+        <p style="margin-bottom: 2rem; opacity: 0.8;">Ледники Таджикистана — сокровище Центральной Азии</p>
+        <div class="social-links">
+            <a href="#">VK</a>
+            <a href="#">TG</a>
+            <a href="#">IG</a>
+        </div>
+        <p style="font-size: 0.85rem; opacity: 0.6;">Создано с любовью к природе Памира · 2024</p>
+    </footer>
+    
+    <script>
+        // Кастомный курсор
+        const cursor = document.getElementById('cursor');
+        const cursorDot = document.getElementById('cursor-dot');
+        
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX - 10 + 'px';
+            cursor.style.top = e.clientY - 10 + 'px';
+            cursorDot.style.left = e.clientX - 3 + 'px';
+            cursorDot.style.top = e.clientY - 3 + 'px';
+        });
+        
+        document.addEventListener('mousedown', () => {
+            cursor.style.transform = 'scale(0.8)';
+        });
+        
+        document.addEventListener('mouseup', () => {
+            cursor.style.transform = 'scale(1)';
+        });
+        
+        // Навигация
+        const navbar = document.getElementById('navbar');
+        
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+        
+        // Плавная прокрутка
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+        
+        // Аккордеон
+        const accordionItems = document.querySelectorAll('.accordion-item');
+        
+        accordionItems.forEach(item => {
+            item.addEventListener('click', () => {
+                accordionItems.forEach(i => i.classList.remove('active'));
+                item.classList.add('active');
+            });
+        });
+        
+        // Reveal на скролл
+        const revealElements = document.querySelectorAll('.reveal');
+        
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, { threshold: 0.1 });
+        
+        revealElements.forEach(el => revealObserver.observe(el));
+        
+        // Тултипы на карте
+        const mapPoints = document.querySelectorAll('.map-point');
+        const tooltip = document.getElementById('map-tooltip');
+        
+        mapPoints.forEach(point => {
+            point.addEventListener('mouseenter', (e) => {
+                const name = point.getAttribute('data-name');
+                const info = point.getAttribute('data-info');
+                tooltip.innerHTML = `<strong>${name}</strong><br>${info}`;
+                tooltip.style.opacity = '1';
+            });
+            
+            point.addEventListener('mousemove', (e) => {
+                const rect = point.closest('.map-container').getBoundingClientRect();
+                tooltip.style.left = (e.clientX - rect.left + 10) + 'px';
+                tooltip.style.top = (e.clientY - rect.top - 40) + 'px';
+            });
+            
+            point.addEventListener('mouseleave', () => {
+                tooltip.style.opacity = '0';
+            });
+        });
+        
+        // Параллакс для горизонтальной галереи
+        const horizontalScroll = document.querySelector('.horizontal-scroll');
+        let isDown = false;
+        let startX;
+        let scrollLeft;
+        
+        horizontalScroll.addEventListener('mousedown', (e) => {
+            isDown = true;
+            startX = e.pageX - horizontalScroll.offsetLeft;
+            scrollLeft = horizontalScroll.scrollLeft;
+        });
+        
+        horizontalScroll.addEventListener('mouseleave', () => {
+            isDown = false;
+        });
+        
+        horizontalScroll.addEventListener('mouseup', () => {
+            isDown = false;
+        });
+        
+        horizontalScroll.addEventListener('mousemove', (e) => {
+            if (!isDown) return;
+            e.preventDefault();
+            const x = e.pageX - horizontalScroll.offsetLeft;
+            const walk = (x - startX) * 2;
+            horizontalScroll.scrollLeft = scrollLeft - walk;
+        });
+    </script>
+</body>
+</html>
